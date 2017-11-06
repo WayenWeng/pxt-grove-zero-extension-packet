@@ -1,0 +1,18 @@
+{
+    "name": "extension",
+    "version": "0.1.0",
+    "description": "Extension PXT packet for Seeed Studio Node Device",
+    "license": "MIT",
+    "dependencies": {
+        "node": "*"
+    },
+    "files": [
+        "README.md",
+        "sensor.ts",
+        "display.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true
+}
