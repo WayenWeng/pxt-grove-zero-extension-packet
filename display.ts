@@ -148,9 +148,16 @@ namespace display
      */
     //% blockId="display_rgb_led_display_alway" block="RGB Led alway %color=colorNumberPicker"
     //% weight=100 blockGap=8 group="RGB Led"
-    export function displayAlway(color: number, duration = 1000)
+    export function displayAlway(color: number, duration = 500)
     {
-        
+        let data: Buffer = pins.createBuffer(6);
+        data[0] = 0x01; // alway mode
+        data[1] = (color >> 16) & 0xff; // red
+        data[2] = (color >> 8) & 0xff; // green
+        data[3] = color & 0xff; // blue
+        data[4] = duration & 0xff; // duration low byte
+        data[5] = (duration >> 8) & 0xff; // duration high byte
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
         loops.pause(duration);
     }
     
@@ -160,9 +167,13 @@ namespace display
      */
     //% blockId="display_rgb_led_display_random_color" block="RGB Led random color"
     //% weight=99 blockGap=8 group="RGB Led"
-    export function displayRandomColor(duration = 1000)
+    export function displayRandomColor(duration = 500)
     {
-        
+        let data: Buffer = pins.createBuffer(3);
+        data[0] = 0x06; // random mode
+        data[1] = duration & 0xff; // duration low byte
+        data[2] = (duration >> 8) & 0xff; // duration high byte
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
         loops.pause(duration);
     }
     
@@ -174,9 +185,18 @@ namespace display
      */
     //% blockId="display_rgb_led_display_blink" block="RGB Led blink %color=colorNumberPicker"
     //% weight=98 blockGap=8 group="RGB Led"
-    export function displayBlink(color: number, interval = 250, duration = 1000)
+    export function displayBlink(color: number, interval = 250, duration = 500)
     {
-        
+        let data: Buffer = pins.createBuffer(8);
+        data[0] = 0x02; // blink mode
+        data[1] = (color >> 16) & 0xff; // red
+        data[2] = (color >> 8) & 0xff; // green
+        data[3] = color & 0xff; // blue
+        data[4] = interval & 0xff; // interval low byte
+        data[5] = (interval >> 8) & 0xff; // interval high byte
+        data[6] = duration & 0xff; // duration low byte
+        data[7] = (duration >> 8) & 0xff; // duration high byte
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
         loops.pause(duration);
     }
     
@@ -188,9 +208,18 @@ namespace display
      */
     //% blockId="display_rgb_led_display_breathe" block="RGB Led breathe %color=colorNumberPicker"
     //% weight=97 blockGap=8 group="RGB Led"
-    export function displayBreathe(color: number, interval = 20, duration = 1000)
+    export function displayBreathe(color: number, interval = 20, duration = 500)
     {
-        
+        let data: Buffer = pins.createBuffer(8);
+        data[0] = 0x03; // breathe mode
+        data[1] = (color >> 16) & 0xff; // red
+        data[2] = (color >> 8) & 0xff; // green
+        data[3] = color & 0xff; // blue
+        data[4] = interval & 0xff; // interval low byte
+        data[5] = (interval >> 8) & 0xff; // interval high byte
+        data[6] = duration & 0xff; // duration low byte
+        data[7] = (duration >> 8) & 0xff; // duration high byte
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
         loops.pause(duration);
     }
     
@@ -201,9 +230,15 @@ namespace display
      */
     //% blockId="display_rgb_led_display_rainbow" block="RGB Led rainbow"
     //% weight=96 blockGap=8 group="RGB Led"
-    export function displayRainbow(interval = 20, duration = 1000)
+    export function displayRainbow(interval = 20, duration = 500)
     {
-        
+        let data: Buffer = pins.createBuffer(5);
+        data[0] = 0x04; // rainbow mode
+        data[1] = interval & 0xff; // interval low byte
+        data[2] = (interval >> 8) & 0xff; // interval high byte
+        data[3] = duration & 0xff; // duration low byte
+        data[4] = (duration >> 8) & 0xff; // duration high byte
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
         loops.pause(duration);
     }
     
@@ -216,9 +251,21 @@ namespace display
      */
     //% blockId="display_rgb_led_display_fade" block="RGB Led fade|from %color1=colorNumberPicker|to %color2=colorNumberPicker"
     //% weight=95 blockGap=8 group="RGB Led"
-    export function displayFade(color1: number, color2: number, interval = 20, duration = 1000)
+    export function displayFade(color1: number, color2: number, interval = 20, duration = 500)
     {
-        
+        let data: Buffer = pins.createBuffer(11);
+        data[0] = 0x05; // fade mode
+        data[1] = (color1 >> 16) & 0xff; // red
+        data[2] = (color1 >> 8) & 0xff; // green
+        data[3] = color1 & 0xff; // blue
+        data[4] = (color2 >> 16) & 0xff; // red
+        data[5] = (color2 >> 8) & 0xff; // green
+        data[6] = color2 & 0xff; // blue
+        data[7] = interval & 0xff; // interval low byte
+        data[8] = (interval >> 8) & 0xff; // interval high byte
+        data[9] = duration & 0xff; // duration low byte
+        data[10] = (duration >> 8) & 0xff; // duration high byte
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
         loops.pause(duration);
     }
 
@@ -231,7 +278,10 @@ namespace display
     //% weight=94 blockGap=8 group="RGB Led"
     export function setBrightness(brightness: number)
     {
-        
+        let data: Buffer = pins.createBuffer(2);
+        data[0] = 0x07; // set brighness
+        data[1] = brightness;
+        driver.i2cSendBytes(DisplayType.RGBLed, data);
     }
     
     /**
@@ -241,7 +291,7 @@ namespace display
     //% weight=93 blockGap=8 group="RGB Led"
     export function stopDisplay()
     {
-        
+        driver.i2cSendByte(DisplayType.RGBLed, 0x08); // stop display
     }
 
     /**
@@ -265,7 +315,7 @@ namespace display
      * @param color the color of display.
      * @param image a string describing the leds, eg: ""
      */
-    //% blockId="display_rgb_matrix_show_leds" block="RGB LED Matrix show leds %color=colorNumberPicker|%image"
+    //% blockId="display_rgb_matrix_show_leds" block="RGB LED Matrix show leds %color=colorIndexPicker|%image"
     //% image.fieldEditor="matrix"
     //% image.fieldOptions.onParentBlock=true
     //% image.fieldOptions.decompileLiterals=true
@@ -275,33 +325,99 @@ namespace display
     //% weight=100 blockGap=8 group="RGB Led Matrix"
     export function showRGBLeds(color: number, image: string)
     {
+        let i = 0;
+        let tempColor = "";
+        let data: Buffer = pins.createBuffer(72);
+
+        data[0] = 0x06; // custom mode
+        data[1] = 500 & 0xff; // 500 ms low byte
+        data[2] = (500 >> 8) & 0xff; // 500 ms high byte
+        data[3] = 1; // display forever
+        data[4] = 1; // total number
+        data[5] = 0; // index number
         
+        while(i < image.length)
+        {
+            const currChar = image.charAt(i++);
+            const isSpace = currChar == '\'' || currChar == ' ' || currChar == '\n' || currChar == '\r';
+            if(!isSpace)tempColor += currChar;
+        }
+
+        i = 0;
+        while(i < tempColor.length)
+        {
+            const currChar = tempColor.charAt(i++);
+            if(currChar == "#")data[8 + i] = color;
+            else data[8 + i] = 0xff;
+        }
+        
+        driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
+        loops.pause(500);
     }
     
     /**
      * Display text on the rgb LED Matrix. Any text with more than 1 character will scroll on the screen.
      * @param str the string pointer, the maximum number is 28 bytes, eg: hello
      * @param color the color of display.
-     * @param orientation the orientation type.
      */
-    //% blockId=display_rgb_matrix_dispaly_string block="RGB LED Matrix show string %str|%color=colorNumberPicker"
+    //% blockId=display_rgb_matrix_dispaly_string block="RGB LED Matrix show string %str|%color=colorIndexPicker"
     //% weight=99 blockGap=8 group="RGB Led Matrix"
-    export function showRGBString(str: string, color: number, orientation = OrientationType.Rotate0)
+    export function showRGBString(str: string, color: number)
     {
-        
+        let time = 0;
+        let len: number = str.length;
+        if(len >= 28)len = 28;
+        let data: Buffer = pins.createBuffer(len + 6);
+
+        if(len > 1) time = len * 1000;
+
+        for(let i = 0; i < len; i ++)data[i + 5] = str.charCodeAt(i);
+        data[0] = 0x05; // string mode
+        data[1] = 0; // not forever
+        data[2] = time & 0xff;
+        data[3] = (time >> 8) & 0xff;
+        data[4] = len;
+        data[5] = color;
+        driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
+
+        loops.pause(time + 500);
     }
     
     /**
      * Display a number on the rgb LED Matrix. A number with more than 1 digit will scroll on the screen.
      * @param num set the number you want to display on LED matrix. Long numbers will roll on it, the shorter you set the time duration, the faster it rolls, eg: 0
      * @param color the color of display.
-     * @param orientation the orientation type.
      */
-    //% blockId=display_rgb_matrix_dispaly_number block="RGB LED Matrix show number %num|%color=colorNumberPicker"
+    //% blockId=display_rgb_matrix_dispaly_number block="RGB LED Matrix show number %num|%color=colorIndexPicker"
     //% weight=98 blockGap=8 group="RGB Led Matrix"
-    export function showRGBNumber(num: number, color: number, orientation = OrientationType.Rotate0)
+    export function showRGBNumber(num: number, color: number)
     {
-        
+        let time = 0;
+        let data: Buffer = pins.createBuffer(7);
+
+        if(num >= 0 && num < 10) time = 0;
+        else if(num >= 10 && num < 100) time = 1000 * 2;
+        else if(num >= 100 && num < 1000) time = 1000 * 3;
+        else if(num >= 1000 && num < 10000) time = 1000 * 4;
+        else if(num >= 10000 && num <= 32767) time = 1000 * 5;
+        else if(num > 32767)return;
+        else if(num < 0 && num > -10) time = 1000 * 2;
+        else if(num <= -10 && num > -100) time = 1000 * 3;
+        else if(num <= -100 && num > -1000) time = 1000 * 4;
+        else if(num <= -1000 && num > -10000) time = 1000 * 5;
+        else if(num <= -10000 && num >= -32768) time = 1000 * 6;
+        else if(num < -32768)return;
+
+        data[0] = 0x04;
+        data[1] = num & 0xff;
+        data[2] = (num >> 8) & 0xff;
+        data[3] = time & 0xff;
+        data[4] = (time >> 8) & 0xff;
+        data[5] = 0;
+        data[6] = color;
+        driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
+
+        loops.pause(time + 500);
     }
     
     /**
@@ -310,7 +426,7 @@ namespace display
      * @param max the maximum value of the graph, eg: 1023
      * @param color the color of display.
      */
-    //% blockId=display_rgb_matrix_dispaly_bar block="RGB LED Matrix graph %value|up to %max|%color=colorNumberPicker"
+    //% blockId=display_rgb_matrix_dispaly_bar block="RGB LED Matrix graph %value|up to %max|%color=colorIndexPicker"
     //% weight=97 blockGap=8 group="RGB Led Matrix"
     export function showRGBBars(value: number, max: number, color: number)
     {
@@ -320,13 +436,11 @@ namespace display
     /**
      * Show a single icon frame on the rgb LED Matrix.
      * @param icon the icon want to show
-     * @param color the color of display.
-     * @param duration display time duration(ms).
      */
-    //% blockId=display_show_rgb_matrix_icon block="RGB LED Matrix show icon %animation=display_icon_picker|%color=colorNumberPicker"
+    //% blockId=display_show_rgb_matrix_icon block="RGB LED Matrix show icon %animation=display_icon_picker"
     //% weight=96 blockGap=8 group="RGB Led Matrix"
     //% duration.defl=1000
-    export function showRGBIcon(icon: IconClass, color: number)
+    export function showRGBIcon(icon: IconClass)
     {
         let renderer = icon.createRenderer();
         renderer();
@@ -356,6 +470,20 @@ namespace display
     //% color.fieldOptions.columns=8
     //% blockHidden=true
     export function colorNumberPicker(color: number): number{
+        return color;
+    }
+    
+    /**
+      * Get the color index picker field editor
+      * @param color color, eg: 0xFF0000
+      */
+    //% blockId=colorIndexPicker block="%color"
+    //% colorSecondary="#FFFFFF"
+    //% color.fieldEditor="colornumber" color.fieldOptions.decompileLiterals=true
+    //% color.fieldOptions.colours='["#ff0000", "#ff1800", "#ff3000", "#ff4800", "#ff6000", "#ff7800", "#ff9000", "#ffa800", "#ffc000", "#ffd800", "#fff000", "#f3ff00", "#dbff00", "#c3ff00", "#abff00", "#93ff00", "#7bff00", "#4bff00", "#1bff00", "#00ff12", "#00ff42", "#00ff5a", "#00ff72", "#00ff8a", "#00ffa2", "#00ffba", "#00ffd2", "#00ffea", "#00ffff", "#00e7ff", "#00cfff", "#00b7ff", "#009fff", "#0087ff", "#006fff", "#0057ff", "#003fff", "#000fff", "#2400ff", "#5400ff", "#8400ff", "#9c00ff", "#b400ff", "#cc00ff", "#e400ff", "#ff00ff", "#ff00e7", "#ff00cf", "#ff00b7", "#ff009f", "#ff0087", "#ff006f", "#ff0057", "#ff003f", "#ff0027", "#ff000f"]'
+    //% color.fieldOptions.columns=8
+    //% blockHidden=true
+    export function colorIndexPicker(color: number): number{
         for(let i = 0; i < 56; i ++) 
         {
             let temp = (colourValueArray[i * 3] << 16) + (colourValueArray[i * 3 + 1] << 8) + colourValueArray[i * 3 + 2];
@@ -363,18 +491,7 @@ namespace display
         }
         return 0;
     }
-    
-//    /**
-//     * test
-//     * @param color the color of display.
-//     */
-//    //% blockId=display_test block="show color index %color=colorNumberPicker"
-//    //% weight=95 blockGap=8 group="RGB Led Matrix"
-//    export function showColorIndex(color: number)
-//    {
-//        display.showNumber(color, OrientationType.Rotate0);
-//    }
-    
+
     /**
       * Get the color wheel field editor
       * @param value value between 0 to 255 to get a color value, eg: 10
@@ -406,7 +523,7 @@ namespace display
 
         public createRenderer(): () => boolean {
             return () => {
-                display.showNumber(this.index, OrientationType.Rotate0);
+                display.showNumber(this.index, OrientationType.Rotate0);  
                 return false;
             }
         }
