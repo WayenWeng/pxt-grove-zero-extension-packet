@@ -8,8 +8,12 @@
     },
     "files": [
         "README.md",
+        "input.ts",
         "sensor.ts",
-        "display.ts"
+        "display.ts",
+        "motor.ts",
+        "icons.jres",
+        "animations.jres"
     ],
     "testFiles": [
         "test.ts"
