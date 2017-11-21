@@ -99,7 +99,7 @@ enum LinerType
 };
 
 /**
- * Functions to operate G2 module.
+ * Functions to operate Grove Zero module.
  */
 //% weight=98 color=#E5B646 icon="icons/sensor.svg" block="Sensor"
 //% groups='["other", "More"]'

@@ -29,7 +29,7 @@ const colourIndexArray: number[] = [
 ];
 
 /**
- * Functions to operate G2 module.
+ * Functions to operate Grove Zero module.
  */
 //% color=#00acdb weight=100 icon="icons/display.svg" block="Display"
 //% groups='["other", "Digit Display", "RGB Led", "RGB Led Matrix"]'

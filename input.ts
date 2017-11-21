@@ -18,7 +18,7 @@ enum MeshEvent {
 };
 
 /**
- * Functions to operate G2 module.
+ * Functions to operate Grove Zero module.
  */
 //% weight=99 color=#db8ccd icon="icons/loops.svg" block="Input"
 //% groups='["other"]'

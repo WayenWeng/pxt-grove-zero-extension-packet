@@ -27,7 +27,7 @@ enum DirectionTpye {
 };
 
 /**
- * Functions to operate G2 module.
+ * Functions to operate Grove Zero module.
  */
 //% weight=95 color=#A26236 icon="icons/motor.svg" block="Motor"
 //% groups='["other", "More"]'

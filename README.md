@@ -1,6 +1,6 @@
-# test
+# Extension
 
-test for grove zero node
+Extension packet for Grove Zero device
 
 ## License
 

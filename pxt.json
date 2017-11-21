@@ -1,7 +1,7 @@
 {
     "name": "extension",
     "version": "0.1.0",
-    "description": "Extension PXT packet for Seeed Studio Node Device",
+    "description": "Extension PXT packet for Seeed Studio Grove Zero Device",
     "license": "MIT",
     "dependencies": {
         "node": "*"
