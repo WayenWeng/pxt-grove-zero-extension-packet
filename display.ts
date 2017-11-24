@@ -529,26 +529,74 @@ namespace display
         }
     }
     
-    //% fixedInstance block="calmIcon" jres blockIdentity="display.iconPicker"
-    export const calmIcon: IconClass = new rgbIcon(0);
-    //% fixedInstance block="catIcon" jres blockIdentity="display.iconPicker"
-    export const catIcon: IconClass = new rgbIcon(1);
-    //% fixedInstance block="downIcon" jres blockIdentity="display.iconPicker"
-    export const downIcon: IconClass = new rgbIcon(2);
-    //% fixedInstance block="giraffeIcon" jres blockIdentity="display.iconPicker"
-    export const giraffeIcon: IconClass = new rgbIcon(3);
-    //% fixedInstance block="hatmanIcon" jres blockIdentity="display.iconPicker"
-    export const hatmanIcon: IconClass = new rgbIcon(4);
-    //% fixedInstance block="jellyfishIcon" jres blockIdentity="display.iconPicker"
-    export const jellyfishIcon: IconClass = new rgbIcon(5);
-    
+    //% fixedInstance block="smile" jres blockIdentity="display.iconPicker"
+    export const smile: IconClass = new rgbIcon(0);
+    //% fixedInstance block="laugh" jres blockIdentity="display.iconPicker"
+    export const laugh: IconClass = new rgbIcon(1);
+    //% fixedInstance block="sad" jres blockIdentity="display.iconPicker"
+    export const sad: IconClass = new rgbIcon(2);
+    //% fixedInstance block="mad" jres blockIdentity="display.iconPicker"
+    export const mad: IconClass = new rgbIcon(3);
+    //% fixedInstance block="angry" jres blockIdentity="display.iconPicker"
+    export const angry: IconClass = new rgbIcon(4);
+    //% fixedInstance block="cry" jres blockIdentity="display.iconPicker"
+    export const cry: IconClass = new rgbIcon(5);
+    //% fixedInstance block=greedy jres blockIdentity="display.iconPicker"
+    export const greedy: IconClass = new rgbIcon(6);
+    //% fixedInstance block="cool" jres blockIdentity="display.iconPicker"
+    export const cool: IconClass = new rgbIcon(7);
+    //% fixedInstance block="shy" jres blockIdentity="display.iconPicker"
+    export const shy: IconClass = new rgbIcon(8);
+    //% fixedInstance block="awkward" jres blockIdentity="display.iconPicker"
+    export const awkward: IconClass = new rgbIcon(9);
+    //% fixedInstance block="heart" jres blockIdentity="display.iconPicker"
+    export const heart: IconClass = new rgbIcon(10);
+    //% fixedInstance block="smallHeart" jres blockIdentity="display.iconPicker"
+    export const smallHeart: IconClass = new rgbIcon(11);
+    //% fixedInstance block="brokenHeart" jres blockIdentity="display.iconPicker"
+    export const brokenHeart: IconClass = new rgbIcon(12);
+    //% fixedInstance block="waterdrop" jres blockIdentity="display.iconPicker"
+    export const waterdrop: IconClass = new rgbIcon(13);
+    //% fixedInstance block="flame" jres blockIdentity="display.iconPicker"
+    export const flame: IconClass = new rgbIcon(14);
+    //% fixedInstance block="creeper" jres blockIdentity="display.iconPicker"
+    export const creeper: IconClass = new rgbIcon(15);
+    //% fixedInstance block="madCreeper" jres blockIdentity="display.iconPicker"
+    export const madCreeper: IconClass = new rgbIcon(16);
+    //% fixedInstance block="sword" jres blockIdentity="display.iconPicker"
+    export const sword: IconClass = new rgbIcon(17);
+    //% fixedInstance block="woodenSword" jres blockIdentity="display.iconPicker"
+    export const woodenSword: IconClass = new rgbIcon(18);
+    //% fixedInstance block="crystalSword" jres blockIdentity="display.iconPicker"
+    export const crystalSword: IconClass = new rgbIcon(19);
+    //% fixedInstance block="house" jres blockIdentity="display.iconPicker"
+    export const house: IconClass = new rgbIcon(20);
+    //% fixedInstance block="tree" jres blockIdentity="display.iconPicker"
+    export const tree: IconClass = new rgbIcon(21);
+    //% fixedInstance block="flower" jres blockIdentity="display.iconPicker"
+    export const flower: IconClass = new rgbIcon(22);
+    //% fixedInstance block="umbrella" jres blockIdentity="display.iconPicker"
+    export const umbrella: IconClass = new rgbIcon(23);
+    //% fixedInstance block="rain" jres blockIdentity="display.iconPicker"
+    export const rain: IconClass = new rgbIcon(24);
+    //% fixedInstance block="monster" jres blockIdentity="display.iconPicker"
+    export const monster: IconClass = new rgbIcon(25);
+    //% fixedInstance block="crab" jres blockIdentity="display.iconPicker"
+    export const crab: IconClass = new rgbIcon(26);
+    //% fixedInstance block="duck" jres blockIdentity="display.iconPicker"
+    export const duck: IconClass = new rgbIcon(27);
+    //% fixedInstance block="rabbit" jres blockIdentity="display.iconPicker"
+    export const rabbit: IconClass = new rgbIcon(28);
+    //% fixedInstance block="cat" jres blockIdentity="display.iconPicker"
+    export const cat: IconClass = new rgbIcon(29);
+
     /**
      * An icon that can be shown on a rgb led matrix
      * @param icon The icon type
      */
     //% blockId=display_icon_picker block="%icon"
     //% icon.fieldEditor="imagedropdown"
-    //% icon.fieldOptions.width=200 icon.fieldOptions.columns="3"
+    //% icon.fieldOptions.width=400 icon.fieldOptions.columns="5"
     //% blockHidden=true
     export function iconPicker(icon: IconClass): IconClass {
         return icon;
