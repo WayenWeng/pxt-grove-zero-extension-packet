@@ -12,7 +12,10 @@
         "sensor.ts",
         "display.ts",
         "motor.ts",
-        "icons.jres",
+        "icons-part-a.jres",
+        "icons-part-b.jres",
+        "icons-part-c.jres",
+        "icons-part-d.jres",
         "animations.jres"
     ],
     "testFiles": [
