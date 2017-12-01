@@ -16,7 +16,8 @@
         "icons-part-b.jres",
         "icons-part-c.jres",
         "icons-part-d.jres",
-        "animations.jres"
+        "icons-part-e.jres",
+        "animations-part-a.jres"
     ],
     "testFiles": [
         "test.ts"

@@ -58,7 +58,7 @@ namespace display
     //% weight=99 blockGap=8 group="Digit Display"
     export function cleanDigitDisplay()
     {
-        
+        driver.i2cSendByte(DisplayType.DigitDisplay, 0x09);
     }
     
     /**
@@ -144,11 +144,11 @@ namespace display
     /**
      * Display always mode on RGB LED.
      * @param color the color of display.
-     * @param duration display time duration(ms). Set it to 0 to display forever.
+     * @param duration display time duration(ms). Set it to 0 to display forever. eg: 0
      */
     //% blockId="display_rgb_led_display_alway" block="RGB Led alway %color=colorNumberPicker"
     //% weight=100 blockGap=8 group="RGB Led"
-    export function displayAlway(color: number, duration = 500)
+    export function displayAlway(color: number, duration: number = 0)
     {
         let data: Buffer = pins.createBuffer(6);
         data[0] = 0x01; // alway mode
@@ -163,11 +163,11 @@ namespace display
     
     /**
      * Display a random color on RGB LED.
-     * @param duration display time duration(ms). Set it to 0 to display forever.
+     * @param duration display time duration(ms). Set it to 0 to display forever. eg: 500
      */
     //% blockId="display_rgb_led_display_random_color" block="RGB Led random color"
     //% weight=99 blockGap=8 group="RGB Led"
-    export function displayRandomColor(duration = 500)
+    export function displayRandomColor(duration: number = 500)
     {
         let data: Buffer = pins.createBuffer(3);
         data[0] = 0x06; // random mode
@@ -180,12 +180,12 @@ namespace display
     /**
      * Display blink mode on RGB LED.
      * @param color the color of display.
-     * @param interval display blink interval time(ms), this parameter determines the rate of blink, default 250ms.
-     * @param duration display time duration(ms). Set it to 0 to display forever.
+     * @param interval display blink interval time(ms), this parameter determines the rate of blink, default 250ms. eg: 250
+     * @param duration display time duration(ms). Set it to 0 to display forever. eg: 0
      */
     //% blockId="display_rgb_led_display_blink" block="RGB Led blink %color=colorNumberPicker"
     //% weight=98 blockGap=8 group="RGB Led"
-    export function displayBlink(color: number, interval = 250, duration = 500)
+    export function displayBlink(color: number, interval: number = 250, duration: number = 0)
     {
         let data: Buffer = pins.createBuffer(8);
         data[0] = 0x02; // blink mode
@@ -203,12 +203,12 @@ namespace display
     /**
      * Display breathe mode on RGB LED.
      * @param color the color of display.
-     * @param interval display breathe interval time(ms), this parameter determines the rate of color change, default 20ms.
-     * @param duration display time duration(ms). Set it to 0 to display forever.
+     * @param interval display breathe interval time(ms), this parameter determines the rate of color change, default 20ms. eg: 20
+     * @param duration display time duration(ms). Set it to 0 to display forever. eg: 0
      */
     //% blockId="display_rgb_led_display_breathe" block="RGB Led breathe %color=colorNumberPicker"
     //% weight=97 blockGap=8 group="RGB Led"
-    export function displayBreathe(color: number, interval = 20, duration = 500)
+    export function displayBreathe(color: number, interval: number = 20, duration: number = 0)
     {
         let data: Buffer = pins.createBuffer(8);
         data[0] = 0x03; // breathe mode
@@ -225,12 +225,12 @@ namespace display
     
     /**
      * Display rainbow mode on RGB LED.
-     * @param interval display rainbow interval time(ms), this parameter determines the rate of color change, default 20ms.
-     * @param duration display time duration(ms). Set it to 0 to display forever.
+     * @param interval display rainbow interval time(ms), this parameter determines the rate of color change, default 20ms. eg: 20
+     * @param duration display time duration(ms). Set it to 0 to display forever. eg: 0
      */
     //% blockId="display_rgb_led_display_rainbow" block="RGB Led rainbow"
     //% weight=96 blockGap=8 group="RGB Led"
-    export function displayRainbow(interval = 20, duration = 500)
+    export function displayRainbow(interval: number = 20, duration: number = 0)
     {
         let data: Buffer = pins.createBuffer(5);
         data[0] = 0x04; // rainbow mode
@@ -246,12 +246,12 @@ namespace display
      * Display fade mode on RGB LED. The RGB LED will change from color1 to color2.
      * @param color1 the color of display at first.
      * @param color2 the color of display at finally.
-     * @param interval display breathe interval time(ms), this parameter determines the rate of color change, default 20ms.
-     * @param duration display time duration(ms) after the color change finish, set it to 0 to display forever.
+     * @param interval display breathe interval time(ms), this parameter determines the rate of color change, default 20ms. eg: 20
+     * @param duration display time duration(ms) after the color change finish, set it to 0 to display forever. eg: 0
      */
     //% blockId="display_rgb_led_display_fade" block="RGB Led fade|from %color1=colorNumberPicker|to %color2=colorNumberPicker"
     //% weight=95 blockGap=8 group="RGB Led"
-    export function displayFade(color1: number, color2: number, interval = 20, duration = 500)
+    export function displayFade(color1: number, color2: number, interval: number = 20, duration: number = 0)
     {
         let data: Buffer = pins.createBuffer(11);
         data[0] = 0x05; // fade mode
@@ -271,7 +271,7 @@ namespace display
 
     /**
      * Set the brightness of RGB LED.
-     * @param brightness display brightness, from 0 - 255, default 100.
+     * @param brightness display brightness, from 0 - 255, default 100. 
      */
     //% blockId="display_rgb_led_display_set_brighness" block="RGB Led set brightness|%brightness"
     //% brightness.min=0 brightness.max=255 brightness.defl=100
@@ -287,7 +287,7 @@ namespace display
     /**
      * Display nothing on RGB LED.
      */
-    //% blockId="display_rgb_led_display_stop" block="RGB Led stop display"
+    //% blockId="display_rgb_led_display_stop" block="RGB Led display clean"
     //% weight=93 blockGap=8 group="RGB Led"
     export function stopDisplay()
     {
@@ -329,7 +329,7 @@ namespace display
         let tempColor = "";
         let data: Buffer = pins.createBuffer(72);
 
-        data[0] = 0x06; // custom mode
+        data[0] = 0x05; // custom mode
         data[1] = 500 & 0xff; // 500 ms low byte
         data[2] = (500 >> 8) & 0xff; // 500 ms high byte
         data[3] = 1; // display forever
@@ -346,9 +346,10 @@ namespace display
         i = 0;
         while(i < tempColor.length)
         {
-            const currChar = tempColor.charAt(i++);
+            const currChar = tempColor.charAt(i);
             if(currChar == "#")data[8 + i] = color;
             else data[8 + i] = 0xff;
+            i ++;
         }
         
         driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
@@ -369,10 +370,10 @@ namespace display
         if(len >= 28)len = 28;
         let data: Buffer = pins.createBuffer(len + 6);
 
-        if(len > 1) time = len * 1000;
+        time = len * 1000;
 
-        for(let i = 0; i < len; i ++)data[i + 5] = str.charCodeAt(i);
-        data[0] = 0x05; // string mode
+        for(let i = 0; i < len; i ++)data[i + 6] = str.charCodeAt(i);
+        data[0] = 0x04; // string mode
         data[1] = 0; // not forever
         data[2] = time & 0xff;
         data[3] = (time >> 8) & 0xff;
@@ -395,7 +396,7 @@ namespace display
         let time = 0;
         let data: Buffer = pins.createBuffer(7);
 
-        if(num >= 0 && num < 10) time = 0;
+        if(num >= 0 && num < 10) time = 1000;
         else if(num >= 10 && num < 100) time = 1000 * 2;
         else if(num >= 100 && num < 1000) time = 1000 * 3;
         else if(num >= 1000 && num < 10000) time = 1000 * 4;
@@ -408,15 +409,15 @@ namespace display
         else if(num <= -10000 && num >= -32768) time = 1000 * 6;
         else if(num < -32768)return;
 
-        data[0] = 0x04;
+        data[0] = 0x03; // command for display number
         data[1] = num & 0xff;
         data[2] = (num >> 8) & 0xff;
         data[3] = time & 0xff;
         data[4] = (time >> 8) & 0xff;
-        data[5] = 0;
+        data[5] = 0; // not forever
         data[6] = color;
         driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
-
+        
         loops.pause(time + 500);
     }
     
@@ -426,11 +427,23 @@ namespace display
      * @param max the maximum value of the graph, eg: 1023
      * @param color the color of display.
      */
-    //% blockId=display_rgb_matrix_dispaly_bar block="RGB LED Matrix graph %value|up to %max|%color=colorIndexPicker"
+    //% blockId=display_rgb_matrix_dispaly_bar block="RGB LED Matrix graph %value|up to %max"
     //% weight=97 blockGap=8 group="RGB Led Matrix"
-    export function showRGBBars(value: number, max: number, color: number)
+    export function showRGBBars(value: number, max: number)
     {
+        value = Math.min(Math.max(value, 0), max);
         
+        // The range expected by the matrix module is 0-32
+        const bar = Math.floor((value / max) * 32);
+        
+        let data: Buffer = pins.createBuffer(5);
+        data[0] = 0x09; // command for display color bar
+        data[1] = bar;
+        data[2] = 500 & 0xff;
+        data[3] = (500 >> 8) & 0xff;
+        data[4] = 1; // forever
+        driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
+        loops.pause(500);
     }
     
     /**
@@ -457,6 +470,16 @@ namespace display
     {
         let renderer = animation.createRenderer();
         renderer();
+    }
+    
+    /**
+     * Clean display on the rgb LED Matrix.
+     */
+    //% blockId=display_clean_rgb_matrix_display block="RGB LED Matrix show clean"
+    //% weight=94 blockGap=8 group="RGB Led Matrix"
+    export function cleanRGBDisplay()
+    {
+        driver.i2cSendByte(DisplayType.RGBLedMatrix, 0x06);
     }
     
     /**
@@ -523,7 +546,14 @@ namespace display
 
         public createRenderer(): () => boolean {
             return () => {
-                display.showNumber(this.index, OrientationType.Rotate0);  
+                let data: Buffer = pins.createBuffer(5);
+                data[0] = 0x02; // command for display icon
+                data[1] = this.index;
+                data[2] = 500 & 0xff;
+                data[3] = (500 >> 8) & 0xff;
+                data[4] = 1; // forever
+                driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
+                loops.pause(500);
                 return false;
             }
         }
@@ -589,6 +619,16 @@ namespace display
     export const rabbit: IconClass = new rgbIcon(28);
     //% fixedInstance block="cat" jres blockIdentity="display.iconPicker"
     export const cat: IconClass = new rgbIcon(29);
+    //% fixedInstance block="up" jres blockIdentity="display.iconPicker"
+    export const up: IconClass = new rgbIcon(30);
+    //% fixedInstance block="down" jres blockIdentity="display.iconPicker"
+    export const down: IconClass = new rgbIcon(31);
+    //% fixedInstance block="left" jres blockIdentity="display.iconPicker"
+    export const left: IconClass = new rgbIcon(32);
+    //% fixedInstance block="right" jres blockIdentity="display.iconPicker"
+    export const right: IconClass = new rgbIcon(33);
+    //% fixedInstance block="smiler" jres blockIdentity="display.iconPicker"
+    export const smiler: IconClass = new rgbIcon(34);
 
     /**
      * An icon that can be shown on a rgb led matrix
@@ -619,24 +659,118 @@ namespace display
 
         public createRenderer(): () => boolean {
             return () => {
-                display.showNumber(this.index, OrientationType.Rotate0);
+                let data: Buffer = pins.createBuffer(6);
+                switch(this.index)
+                {
+                    case 0: // clock wave animation
+                        data[0] = 0x0a; // command for color wave
+                        data[1] = 0x80; // color index
+                        data[2] = 2000 & 0xff;
+                        data[3] = (2000 >> 8) & 0xff;
+                        data[4] = 0; // no forever
+                        data[5] = 0; 
+                    break;
+                    
+                    case 1: // big clock wise animation
+                        data[0] = 0x0b; // command for clock wise
+                        data[1] = 1; // cw or not
+                        data[2] = 1; // big or small
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 2: // small clock wise animation
+                        data[0] = 0x0b; // command for clock wise
+                        data[1] = 1; // cw or not
+                        data[2] = 0; // big or small
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 3: // big anticlock wise animation
+                        data[0] = 0x0b; // command for clock wise
+                        data[1] = 0; // cw or not
+                        data[2] = 1; // big or small
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 4: // small anticlock wise animation
+                        data[0] = 0x0b; // command for clock wise
+                        data[1] = 0; // cw or not
+                        data[2] = 0; // big or small
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 5: // rainbow animation
+                        data[0] = 0x0c; // command for built-in animation
+                        data[1] = 255;
+                        data[2] = 255;
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 6: // fire animation
+                        data[0] = 0x0c; // command for built-in animation
+                        data[1] = 254;
+                        data[2] = 254;
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 7: // walking animation
+                        data[0] = 0x0c; // command for built-in animation
+                        data[1] = 42;
+                        data[2] = 43;
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    case 8: // broken heart animation
+                        data[0] = 0x0c; // command for built-in animation
+                        data[1] = 44;
+                        data[2] = 52;
+                        data[3] = 2000 & 0xff;
+                        data[4] = (2000 >> 8) & 0xff;
+                        data[5] = 0; // no forever
+                    break;
+                    
+                    default:
+                    break;
+                }
+                driver.i2cSendBytes(DisplayType.RGBLedMatrix, data);
+                loops.pause(2000);
                 return false;
             }
         }
     }
     
-    //% fixedInstance block="rainbowAnimation" jres blockIdentity="display.animationPicker"
-    export const rainbowAnimation: AnimationClass = new rgbAnimation(0);
-    //% fixedInstance block="colorWipeAnimation" jres blockIdentity="display.animationPicker"
-    export const colorWipeAnimation: AnimationClass = new rgbAnimation(1);
-    //% fixedInstance block="runningLightsAnimation" jres blockIdentity="display.animationPicker"
-    export const runningLightsAnimation: AnimationClass = new rgbAnimation(2);
-    //% fixedInstance block="sparkleAnimation" jres blockIdentity="display.animationPicker"
-    export const sparkleAnimation: AnimationClass = new rgbAnimation(3);
-    //% fixedInstance block="theaterChaseAnimation" jres blockIdentity="display.animationPicker"
-    export const theaterChaseAnimation: AnimationClass = new rgbAnimation(4);
-    //% fixedInstance block="cometAnimation" jres blockIdentity="display.animationPicker"
-    export const cometAnimation: AnimationClass = new rgbAnimation(5);
+    //% fixedInstance block="clockWave" jres blockIdentity="display.animationPicker"
+    export const clockWave: AnimationClass = new rgbAnimation(0);
+    //% fixedInstance block="bigClockWise" jres blockIdentity="display.animationPicker"
+    export const bigClockWise: AnimationClass = new rgbAnimation(1);
+    //% fixedInstance block="smallClockWise" jres blockIdentity="display.animationPicker"
+    export const smallClockWise: AnimationClass = new rgbAnimation(2);
+    //% fixedInstance block="bigAnticlockWise" jres blockIdentity="display.animationPicker"
+    export const bigAnticlockWise: AnimationClass = new rgbAnimation(3);
+    //% fixedInstance block="smallAnticlockWise" jres blockIdentity="display.animationPicker"
+    export const smallAnticlockWise: AnimationClass = new rgbAnimation(4);
+    //% fixedInstance block="rainbow" jres blockIdentity="display.animationPicker"
+    export const rainbow: AnimationClass = new rgbAnimation(5);
+    //% fixedInstance block="fire" jres blockIdentity="display.animationPicker"
+    export const fire: AnimationClass = new rgbAnimation(6);
+    //% fixedInstance block="walking" jres blockIdentity="display.animationPicker"
+    export const walking: AnimationClass = new rgbAnimation(7);
+    //% fixedInstance block="heartBroken" jres blockIdentity="display.animationPicker"
+    export const heartBroken: AnimationClass = new rgbAnimation(8);
 
     /**
      * An animation that can be shown on a light strip
@@ -644,7 +778,7 @@ namespace display
      */
     //% blockId=display_animation_picker block="%animation"
     //% animation.fieldEditor="imagedropdown"
-    //% animation.fieldOptions.width=200 animation.fieldOptions.columns="3"
+    //% animation.fieldOptions.width=240 animation.fieldOptions.columns="3"
     //% blockHidden=true
     export function animationPicker(animation: AnimationClass): AnimationClass {
         return animation;
