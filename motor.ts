@@ -27,7 +27,11 @@ enum DirectionTpye {
     //% block=clockwise
     Clockwise = 5,
     //% block=anticlockwise
-    Anticlockwise = 6
+    Anticlockwise = 6,
+    //% block=auto
+    Auto = 7,
+    //% block=random
+    Random = 8
 };
 
 /**
@@ -60,20 +64,28 @@ namespace motor
     //% blockId=motor_run_wheel block="wheel run|%speed|on|%direction"
     //% weight=99 blockGap=8
     export function runWheel(speed: SpeedTpye, direction: DirectionTpye)
-    {
-        let left = 0, right = 0;
-        if(speed == SpeedTpye.Slow){left = 85; right = 85;}
-        else if(speed == SpeedTpye.Medium){left = 170; right = 170;}
-        else if(speed == SpeedTpye.Fast){left = 255; right = 255;}
-        
-        if(direction == DirectionTpye.Straight){}
-        else if(direction == DirectionTpye.Back){left = (-1) * left; right = (-1) * right;}
-        else if(direction == DirectionTpye.Left){left = 255 - left / 2; right = 255;}
-        else if(direction == DirectionTpye.Right){right = 255 - right / 2; left = 255;}
-        else if(direction == DirectionTpye.Clockwise){right = -right; }
-        else if(direction == DirectionTpye.Anticlockwise){left = -left; }
-        
-        runWheelWithDuty(left, right);
+    {        
+        if((direction == DirectionTpye.Auto))
+        {
+            if((sensor.linerEventValue == LinerEvent.LeftLv1) || (sensor.linerEventValue == LinerEvent.LeftLv2))
+                direction = DirectionTpye.Anticlockwise;
+            else if((sensor.linerEventValue == LinerEvent.RightLv1) || (sensor.linerEventValue == LinerEvent.RightLv2))
+                direction = DirectionTpye.Clockwise;
+        }
+        else if((direction == DirectionTpye.Random))
+        {
+            let random: number = Math.randomRange(0, 1);
+            if(random == 0)direction = DirectionTpye.Clockwise;
+            else if(random == 1)direction = DirectionTpye.Anticlockwise;
+        }
+
+        let data: Buffer = pins.createBuffer(5);
+        data[0] = 0x02;
+        data[1] = speed;
+        data[2] = direction;
+        data[3] = 0;
+        data[4] = 0;
+        driver.i2cSendBytes(MotorTpye.Wheel, data);
     }
     
     /**

@@ -74,14 +74,18 @@ enum ColorEvent
 
 enum LinerEvent
 {
-    //% block=left
-	Left = 1,
-    //% block=right
-    Right = 2,
     //% block=straight
-	Straight = 3,
+	Straight = 1,
     //% block=end
-    End = 4
+    End = 2,
+    //% block=left
+	LeftLv1 = 3,
+    //% block="left+"
+	LeftLv2 = 4,
+    //% block=right
+    RightLv1 = 5,
+    //% block="right+"
+    RightLv2 = 6
 };
 
 enum LinerType
@@ -165,6 +169,7 @@ namespace sensor
         control.onEvent(eventId, event, handler);
     }
     
+    export let linerEventValue = 0;
     const eventIdLiner = 9000;
     let initLiner = false;
     let lastLiner = 0;
@@ -184,6 +189,7 @@ namespace sensor
                 while(true) {
                     driver.i2cSendByte(SensorType.Liner, 0x02);
                     const event = driver.i2cReceiveByte(SensorType.Liner);
+                    if(event > 2)linerEventValue = event;
                     if (event != lastLiner) {
                         lastLiner = event;
                         control.raiseEvent(eventIdLiner, lastLiner);
