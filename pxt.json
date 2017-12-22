@@ -18,7 +18,8 @@
         "icons-part-d.jres",
         "icons-part-e.jres",
         "animations-part-a.jres",
-        "_locales/zh-cn/extension-strings.json"
+        "_locales/zh-cn/extension-strings.json",
+        "_locales/zh-cn/extension-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
