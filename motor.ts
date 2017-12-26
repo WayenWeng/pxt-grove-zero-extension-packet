@@ -16,22 +16,25 @@ enum SpeedTpye {
 };
 
 enum DirectionTpye {
-    //% block=straight
-    Straight = 1,
-    //% block=back
-    Back = 2,
+    //% block=forward
+    Forward = 1,
+    //% block=backward
+    Backward = 2,
     //% block=left
     Left = 3,
     //% block=right
     Right = 4,
     //% block=clockwise
     Clockwise = 5,
-    //% block=anticlockwise
-    Anticlockwise = 6,
-    //% block=auto
-    Auto = 7,
-    //% block=random
-    Random = 8
+    //% block="antic-lockwise"
+    Anticlockwise = 6
+};
+
+enum MotionTpye {
+    //% block="random direction"
+    Random = 0,
+    //% block=automatically
+    Auto = 1
 };
 
 /**
@@ -42,13 +45,13 @@ enum DirectionTpye {
 namespace motor
 {
     /**
-     * Move the servo by a degree.
+     * Set the servo position by degree.
      * @param degree set the degree you want to move.
      */
-    //% blockId=motor_move_servo block="servo move|%degree"
+    //% blockId=motor_move_servo block="servo move to|%degree|(degree)"
     //% degree.min=0 degree.max=180 degree.defl=0
     //% weight=100 blockGap=8
-    export function moveServo(degree: number)
+    export function moveServoTo(degree: number)
     {
         let data: Buffer = pins.createBuffer(2);
         data[0] = 0x02;
@@ -57,28 +60,14 @@ namespace motor
     }
     
     /**
-     * Run wheel by speed and direction.
-     * @param speed the speed that want to run.
+     * Set the actions and the moving speed of motormodule.
      * @param direction the direction that want to set.
+     * @param speed the speed that want to run.
      */
-    //% blockId=motor_run_wheel block="wheel run|%speed|on|%direction"
+    //% blockId=motor_set_action block="go|%direction|at speed|%speed"
     //% weight=99 blockGap=8
-    export function runWheel(speed: SpeedTpye, direction: DirectionTpye)
+    export function setMotormoduleAction(direction: DirectionTpye, speed: SpeedTpye)
     {        
-        if((direction == DirectionTpye.Auto))
-        {
-            if((sensor.linerEventValue == LinerEvent.LeftLv1) || (sensor.linerEventValue == LinerEvent.LeftLv2))
-                direction = DirectionTpye.Anticlockwise;
-            else if((sensor.linerEventValue == LinerEvent.RightLv1) || (sensor.linerEventValue == LinerEvent.RightLv2))
-                direction = DirectionTpye.Clockwise;
-        }
-        else if((direction == DirectionTpye.Random))
-        {
-            let random: number = Math.randomRange(0, 1);
-            if(random == 0)direction = DirectionTpye.Clockwise;
-            else if(random == 1)direction = DirectionTpye.Anticlockwise;
-        }
-
         let data: Buffer = pins.createBuffer(5);
         data[0] = 0x02;
         data[1] = speed;
@@ -89,37 +78,25 @@ namespace motor
     }
     
     /**
-     * Stop wheel run.
+     * Stop the motormodule.
      */
-    //% blockId=motor_stop_wheel block="wheel stop"
+    //% blockId=motor_stop_run block="stop"
     //% weight=98 blockGap=8
-    export function stopWheel()
+    export function stopMotormodule()
     {        
-        runWheelWithDuty(0, 0);
+        setMotormoduleSpeed(0, 0);
     }
     
     /**
-     * Set the mini fan by a speed.
-     * @param speed the speed you want to set.
-     */
-    //% blockId=motor_set_mini_fan block="mini fan speed|%speed"
-    //% speed.min=0 speed.max=128 speed.defl=0
-    //% weight=97 blockGap=8
-    export function setMiniFan(speed: number)
-    {
-        
-    }
-    
-    /**
-     * Run wheel by duty.
+     * Set the speed of motors on motormodule.
      * @param left the left speed you want to run.
      * @param right the right speed you want to run.
      */
-    //% blockId=motor_run_wheel_with_duty block="wheel run|left|%left|right|%right"
+    //% blockId=motor_set_speed_with_duty block="set motor speed left|%left|right|%right"
     //% left.min=-128 left.max=128 left.defl=0
     //% right.min=-255 right.max=255 right.defl=0
     //% weight=100 blockGap=8 group="More"
-    export function runWheelWithDuty(left: number, right: number)
+    export function setMotormoduleSpeed(left: number, right: number)
     {
         let data: Buffer = pins.createBuffer(5);
         data[0] = 0x01;
@@ -127,6 +104,38 @@ namespace motor
         data[2] = (left >> 8) & 0xff;
         data[3] = right & 0xff;
         data[4] = (right >> 8) & 0xff;
+        driver.i2cSendBytes(MotorTpye.Wheel, data);
+    }
+    
+    /**
+     * Set the actions and the moving speed of motormodule when it lost the line(detected by the line follower).
+     * @param motion the motion that want to set.
+     * @param speed the speed that want to run.
+     */
+    //% blockId=motor_when_lost_line block="go|%motion|at speed|%speed|when lost the line"
+    //% weight=99 blockGap=8 group="More"
+    export function whenMotormoduleLostLine(motion: MotionTpye, speed: SpeedTpye)
+    {
+        if((motion == MotionTpye.Auto))
+        {
+            if((sensor.linerEventValue == LinerEvent.Left) || (sensor.linerEventValue == LinerEvent.Leftmost))
+                motion = 6; // Anticlockwise
+            else if((sensor.linerEventValue == LinerEvent.Right) || (sensor.linerEventValue == LinerEvent.Rightmost))
+                motion = 5; // Clockwise
+        }
+        else if((motion == MotionTpye.Random))
+        {
+            let random: number = Math.randomRange(0, 1);
+            if(random == 0)motion = 5; // Clockwise
+            else if(random == 1)motion = 6; // Anticlockwise
+        }
+
+        let data: Buffer = pins.createBuffer(5);
+        data[0] = 0x02;
+        data[1] = speed;
+        data[2] = motion;
+        data[3] = 0;
+        data[4] = 0;
         driver.i2cSendBytes(MotorTpye.Wheel, data);
     }
 }
