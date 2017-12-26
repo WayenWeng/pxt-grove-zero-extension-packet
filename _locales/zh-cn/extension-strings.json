@@ -4,21 +4,17 @@
   "ColorEvent.Green|block": "绿",
   "ColorEvent.Other|block": "其它",
   "ColorEvent.Red|block": "红",
-
   "DirectionTpye.Forward|block": "前",
   "DirectionTpye.Backward|block": "后",
   "DirectionTpye.Left|block": "左",
   "DirectionTpye.Right|block": "右",
   "DirectionTpye.Clockwise|block": "顺时针",
   "DirectionTpye.Anticlockwise|block": "逆时针",
-  
   "MotionTpye.Random|block": "随机",
   "MotionTpye.Auto|block": "自动",
-  
   "KnobEvent.Clockwise|block": "顺时针",
   "KnobEvent.Anticlockwise|block": "逆时针",
   "KnobEvent.Press|block": "按下",
-  
   "GestureEvent.Up|block": "上",
   "GestureEvent.Down|block": "下",
   "GestureEvent.Left|block": "左",
@@ -28,35 +24,28 @@
   "GestureEvent.Clockwise|block": "顺时针",
   "GestureEvent.Anticlockwise|block": "逆时针",
   "GestureEvent.Wave|block": "波浪",
-  
   "LinerEvent.Middle|block": "中间",
   "LinerEvent.Left|block": "左",
   "LinerEvent.Leftmost|block": "最左",
   "LinerEvent.Right|block": "右",
   "LinerEvent.Rightmost|block": "最右",
   "LinerEvent.Lost|block": "丢失",
-  
   "MeshEvent.Click|block": "单击",
   "MeshEvent.DoubleClick|block": "双击",
   "MeshEvent.Hold|block": "长按",
   "MeshEvent.ThriceClick|block": "三击",
-  
   "PIREvent.Move|block": "移动",
   "PIREvent.Stop|block": "静止",
-
   "SpeedTpye.Fast|block": "快速",
   "SpeedTpye.Medium|block": "中速",
   "SpeedTpye.Slow|block": "慢速",
-  
   "UltrasonicEvent.Close|block": "近",
   "UltrasonicEvent.Far|block": "远",
-  
   "display.animationPicker|block": "%animation",
   "display.colorIndexPicker|block": "%color",
   "display.colorNumberPicker|block": "%color",
   "display.colorWheelPicker|block": "%color",
   "display.iconPicker|block": "%icon",
-  
   "display.angry|block": "生气",
   "display.awkward|block": "尴尬",
   "display.bigClockWise|block": "顺时针大",
@@ -101,7 +90,6 @@
   "display.walking|block": "步行",
   "display.waterdrop|block": "水滴",
   "display.woodenSword|block": "木剑",
-  
   "display.rgbLedColor|block": "红|%red|绿|%green|蓝|%blue",
   "display.displayAlway|block": "RGB Led 总是|%color=colorNumberPicker",
   "display.displayBlink|block": "RGB Led 闪烁|%color=colorNumberPicker",
@@ -111,7 +99,6 @@
   "display.displayRandomColor|block": "RGB Led 随机颜色",
   "display.stopDisplay|block": "RGB Led 显示清除",
   "display.setBrightness|block": "RGB Led 设置亮度|%brightness",
-  
   "display.showDigitDisplay|block": "数码管显示|%num",
   "display.cleanDigitDisplay|block": "数码管清屏",
   "display.startTimer|block": "开始倒数(秒)|%time",
@@ -121,7 +108,6 @@
   "display.pauseStopwatch|block": "暂停码表",
   "display.resumeStopwatch|block": "恢复码表",
   "display.resetStopwatch|block": "重置码表",
-  
   "display.cleanRGBDisplay|block": "RGB LED 点阵清屏",
   "display.showRGBAnimation|block": "RGB LED 点阵显示动画|%animation=display_animation_picker",
   "display.showRGBBars|block": "RGB LED 点阵柱形显示|%value|最大值|%max",
@@ -129,17 +115,14 @@
   "display.showRGBLeds|block": "RGB LED 点阵画图|%color=colorIndexPicker|%image",
   "display.showRGBNumber|block": "RGB LED 点阵显示数值|%num|%color=colorIndexPicker",
   "display.showRGBString|block": "RGB LED 点阵显示英文|%str|%color=colorIndexPicker",
-  
   "input.onMesh|block": "当机械按键为|%event",
   "input.slideDimmer|block": "滑动变阻器数值",
   "input.wasMeshKeyTriggered|block": "机械按键是|%event",
-  
   "motor.moveServoTo|block": "舵机转到|%degree|(度)",
   "motor.setMotormoduleAction|block": "向|%direction|以|%speed|速运动",
   "motor.stopMotormodule|block": "停止",
   "motor.setMotormoduleSpeed|block": "马达以左速|%left|右速|%right|运动",
-  "motor.whenMotormoduleLostLine|block": "丢失巡线时马达|%motion|以|%speed|速运动"
-  
+  "motor.whenMotormoduleLostLine|block": "丢失巡线时马达|%motion|以|%speed|速运动",
   "sensor.color|block": "颜色",
   "sensor.distance|block": "距离",
   "sensor.onColor|block": "当颜色为|%event",
@@ -154,7 +137,6 @@
   "sensor.wasLinePositionTriggered|block": "巡线位置是|%event",
   "sensor.wasPIRTriggered|block": "红外运动传感器是|%event",
   "sensor.wasUltrasonicTriggered|block": "距离是|%event",
-  
   "{id:category}Input": "Input",
   "{id:category}Sensor": "Sensor",
   "{id:category}Display": "Display",
@@ -167,7 +149,6 @@
   "{id:group}Digit Display": "Digit Display",
   "{id:group}RGB Led Matrix": "RGB Led Matrix",
   "{id:group}More": "More",
-  
   "SensorType.Encoder|block": "encoder",
   "SensorType.Gesture|block": "gesture",
   "SensorType.Liner|block": "liner",
@@ -179,5 +160,5 @@
   "DisplayType.RGBLedMatrix|block": "rgb led matrix",
   "DisplayType.RGBLed|block": "rgb led",
   "MotorTpye.Servo|block": "servo",
-  "MotorTpye.Wheel|block": "wheel",
+  "MotorTpye.Wheel|block": "wheel"
 }
