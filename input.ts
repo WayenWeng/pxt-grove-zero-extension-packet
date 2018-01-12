@@ -43,8 +43,10 @@ namespace input
     //% weight=98 blockGap=8
     export function slideDimmer(): number
     {
-        
-        return 0;
+        let data: Buffer = pins.createBuffer(2);
+        driver.i2cSendByte(InputType.SlideDimmer, 0x02);
+        data = driver.i2cReceiveBytes(InputType.SlideDimmer, 2);
+        return (data[0] + data[1] * 256);
     }
     
     /**
