@@ -93,7 +93,7 @@ namespace motor
      * @param right the right speed you want to run.
      */
     //% blockId=motor_set_speed_with_duty block="set motor speed left|%left|right|%right"
-    //% left.min=-128 left.max=128 left.defl=0
+    //% left.min=-255 left.max=255 left.defl=0
     //% right.min=-255 right.max=255 right.defl=0
     //% weight=100 blockGap=8 group="More"
     export function setMotormoduleSpeed(left: number, right: number)
